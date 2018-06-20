@@ -38,7 +38,7 @@
 #include "sat-pref-polar-view.h"
 #include "sat-pref-refresh.h"
 #include "sat-pref-single-sat.h"
-
+#include "sat-pref-autotrack.h"
 
 /**
  * Create and initialise widgets for the modules prefs tab.
@@ -67,6 +67,9 @@ GtkWidget      *sat_pref_modules_create(GKeyFile * cfg)
                              sat_pref_refresh_create(cfg),
                              gtk_label_new(_("Refresh Rates")));
     gtk_notebook_append_page(GTK_NOTEBOOK(nbook),
+                             sat_pref_autotrack_create(cfg),
+                             gtk_label_new(_("Autotracking")));
+    gtk_notebook_append_page(GTK_NOTEBOOK(nbook),
                              sat_pref_list_view_create(cfg),
                              gtk_label_new(_("List View")));
     gtk_notebook_append_page(GTK_NOTEBOOK(nbook),
@@ -87,6 +90,7 @@ void sat_pref_modules_cancel(GKeyFile * cfg)
 {
     sat_pref_layout_cancel(cfg);
     sat_pref_refresh_cancel(cfg);
+    sat_pref_autotrack_cancel(cfg);
     sat_pref_list_view_cancel(cfg);
     sat_pref_map_view_cancel(cfg);
     sat_pref_polar_view_cancel(cfg);
@@ -98,6 +102,7 @@ void sat_pref_modules_ok(GKeyFile * cfg)
 {
     sat_pref_layout_ok(cfg);
     sat_pref_refresh_ok(cfg);
+    sat_pref_autotrack_ok(cfg);
     sat_pref_list_view_ok(cfg);
     sat_pref_map_view_ok(cfg);
     sat_pref_polar_view_ok(cfg);
