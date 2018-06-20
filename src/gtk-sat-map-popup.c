@@ -141,9 +141,10 @@ void gtk_sat_map_popup_exec(sat_t * sat, qth_t * qth,
 
     /* Note: event can be NULL here when called from view_onPopupMenu;
      *  gdk_event_get_time() accepts a NULL argument */
-    gtk_menu_popup(GTK_MENU(menu), NULL, NULL, NULL, NULL,
+    /*gtk_menu_popup(GTK_MENU(menu), NULL, NULL, NULL, NULL,
                    (event != NULL) ? event->button : 0,
-                   gdk_event_get_time((GdkEvent *) event));
+                   gdk_event_get_time((GdkEvent *) (GdkEvent *) event));*/
+     gtk_menu_popup_at_pointer (GTK_MENU(menu), (GdkEvent *) event);
 }
 
 /**

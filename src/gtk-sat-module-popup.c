@@ -216,8 +216,10 @@ void gtk_sat_module_popup(GtkSatModule * module)
 
     gtk_widget_show_all(menu);
 
-    gtk_menu_popup(GTK_MENU(menu), NULL, NULL, NULL, NULL,
-                   0, gdk_event_get_time(NULL));
+    /*gtk_menu_popup(GTK_MENU(menu), NULL, NULL, NULL, NULL,
+                   0, gdk_event_get_time(NULL));*/
+    gtk_menu_popup_at_pointer (GTK_MENU(menu), NULL);
+
 }
 
 /**
@@ -1150,7 +1152,7 @@ static void name_changed(GtkWidget * widget, gpointer data)
         {
             if (!gpredict_legal_char(*j))
             {
-                gdk_beep();
+                gdk_display_beep(gdk_display_get_default());
                 pos = gtk_editable_get_position(GTK_EDITABLE(widget));
                 gtk_editable_delete_text(GTK_EDITABLE(widget), pos, pos + 1);
             }
@@ -1211,8 +1213,11 @@ gboolean module_window_config_cb(GtkWidget * widget, GdkEventConfigure * event,
 #endif
 
     /* don't save off-screen positioning */
+    GdkRectangle screen_geometry;
+    gdk_monitor_get_geometry ( gdk_display_get_primary_monitor( gdk_display_get_default() ),
+                              &screen_geometry);
     if (x + event->width < 0 || y + event->height < 0 ||
-        x > gdk_screen_width() || y > gdk_screen_height())
+        x > screen_geometry.width || y > screen_geometry.height)
     {
         return FALSE;           /* carry on normally */
     }

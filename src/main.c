@@ -373,8 +373,11 @@ static gboolean gpredict_app_config(GtkWidget * widget,
 #endif
 
     /* don't save off-screen positioning */
+    GdkRectangle screen_geometry;
+    gdk_monitor_get_geometry ( gdk_display_get_primary_monitor( gdk_display_get_default() ),
+                              &screen_geometry);
     if (x + event->width < 0 || y + event->height < 0 ||
-        x > gdk_screen_width() || y > gdk_screen_height())
+        x > screen_geometry.width || y > screen_geometry.height)
     {
 
         return FALSE;           /* carry on normally */
